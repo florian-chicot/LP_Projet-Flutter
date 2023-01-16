@@ -6,18 +6,19 @@ import 'dart:convert';
 import '../Model/country.dart';
 import 'package:http/http.dart' as http;
 
-Future<Country> fetchCountry() async {
-  final response = await http
-      .get(Uri.parse('https://restcountries.com/v3.1/all'));
+Future<List<Country>> fetchCountries() async {
+  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/all'));
 
   if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return Country.fromJson(jsonDecode(response.body));
+    // If the server did return a 200 OK response, then parse the JSON.
+    //return List<Country>.fromJson(jsonDecode(response.body));
+    List<dynamic> countriesJson = json.decode(response.body);
+    List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
+    return countries;
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load countries');
   }
 }
 
@@ -29,12 +30,12 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late Future<Country> futureCountry;
+  late Future<List<Country>> futureCountries;
 
   @override
   void initState() {
     super.initState();
-    futureCountry= fetchCountry();
+    futureCountries= fetchCountries();
   }
 
   @override
@@ -47,16 +48,28 @@ class _AppState extends State<App> {
       ),
       backgroundColor: Colors.grey.shade100,
       body: Center(
-        child: FutureBuilder<Country>(
-          future: futureCountry,
+        child: FutureBuilder<List<Country>>(
+          future: futureCountries,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text(snapshot.data!.frenchName);
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child:
+                    ListTile(
+                      title: Text(snapshot.data![index].name),
+                      subtitle: Text(snapshot.data![index].officialName),
+                      //subtitle: Text(snapshot.data![index].frenchName), //debug
+                      //subtitle: Text(snapshot.data![index].flag), //debug
+                      //subtitle: Text(snapshot.data![index].population), //debug
+                    ),
+                  );
+                },
+              );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
-
-            // By default, show a loading spinner.
             return const CircularProgressIndicator();
           },
         ),
