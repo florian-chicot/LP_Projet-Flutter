@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_svg/flutter_svg.dart';
 
 Future<List<Country>> fetchCountries() async {
-  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/all'));
+  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/region/antarctic'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response, then parse the JSON.
@@ -45,7 +45,7 @@ class _AppState extends State<App> {
       appBar: AppBar(
         title: const Text("Home Page"),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.black54,
       ),
       backgroundColor: Colors.grey.shade100,
       body: Center(
@@ -53,23 +53,17 @@ class _AppState extends State<App> {
           future: futureCountries,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.separated(
-                itemCount: 5,
-                separatorBuilder: (BuildContext context, int index) => const Divider(),
+              return GridView.builder(
+                itemCount: snapshot.data!.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 10,
+                  childAspectRatio: 1.0,
+                  mainAxisSpacing: 4.0,
+                  crossAxisSpacing: 4.0,
+                ),
                 itemBuilder: (context, index) {
                   return Card(
-                    child:
-                    ListTile(
-                      title: Text(snapshot.data![index].name),
-                      //subtitle: Text(snapshot.data![index].officialName),
-                      //subtitle: Text(snapshot.data![index].frenchName), //debug
-                      //subtitle: Text(snapshot.data![index].flag), //debug
-                      //subtitle: Text((snapshot.data![index].population).toString() + ' inhabitants')
-                      subtitle:
-                        SvgPicture.network(snapshot.data![index].flag,
-                          height: 100,
-                          fit: BoxFit.scaleDown), //debug
-                    ),
+                    child: SvgPicture.network(snapshot.data![index].flag)
                   );
                 },
               );
