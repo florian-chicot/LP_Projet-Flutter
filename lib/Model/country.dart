@@ -12,12 +12,13 @@ class Country {
   final String frenchName;
   final String officialName;
   final String flag;
+  final String flagEmoji;
   //final List<String> capital;
   //final List<String> continent;
   //final List<String> languages;
   //final bool independent;
   //final List<String> currencies;
-  final String population;
+  final int population;
   //final List<String> topLevelDomains;
 
   const Country({
@@ -25,6 +26,7 @@ class Country {
     required this.frenchName,
     required this.officialName,
     required this.flag,
+    required this.flagEmoji,
     //required this.capital,
     //required this.continent,
     //required this.languages,
@@ -40,12 +42,13 @@ class Country {
       frenchName: json['translations']['fra']['common'],
       officialName: json['name']['official'],
       flag: json['flags']['svg'],
+      flagEmoji: json['flag'],
       //capital: List<String>.from(json['capital'].map((currencies) => currencies['name'])),
       //continent: json['region'],
       //languages: List<String>.from(json['languages'].map((language) => language['name'])),
       //independent: json['independent'],
       //currencies: List<String>.from(json['currencies'].map((currencies) => currencies['name'])),
-      population: json['population'].toString(),
+      population: json['population'],
       //topLevelDomains: json['tld'],
     );
   }

@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import '../Model/country.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_svg/flutter_svg.dart';
 
 Future<List<Country>> fetchCountries() async {
   final response = await http.get(Uri.parse('https://restcountries.com/v3.1/all'));
@@ -52,17 +53,22 @@ class _AppState extends State<App> {
           future: futureCountries,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
+              return ListView.separated(
+                itemCount: 5,
+                separatorBuilder: (BuildContext context, int index) => const Divider(),
                 itemBuilder: (context, index) {
                   return Card(
                     child:
                     ListTile(
                       title: Text(snapshot.data![index].name),
-                      subtitle: Text(snapshot.data![index].officialName),
+                      //subtitle: Text(snapshot.data![index].officialName),
                       //subtitle: Text(snapshot.data![index].frenchName), //debug
                       //subtitle: Text(snapshot.data![index].flag), //debug
-                      //subtitle: Text(snapshot.data![index].population), //debug
+                      //subtitle: Text((snapshot.data![index].population).toString() + ' inhabitants')
+                      subtitle:
+                        SvgPicture.network(snapshot.data![index].flag,
+                          height: 100,
+                          fit: BoxFit.scaleDown), //debug
                     ),
                   );
                 },
