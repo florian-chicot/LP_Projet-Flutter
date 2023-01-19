@@ -10,6 +10,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  final TextEditingController _controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class _AppState extends State<App> {
                 SizedBox(
                   width: 300,
                   child: TextFormField(
+                    controller: _controller,
                     decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       labelText: 'Search Countries',
@@ -41,7 +44,9 @@ class _AppState extends State<App> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Search()),
-                    );
+                    ).then((value) {
+                      _controller.clear();
+                    });
                   },
                 ),
               ],
@@ -52,7 +57,9 @@ class _AppState extends State<App> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const AboutUs()),
-                );
+                ).then((value) {
+                  _controller.clear();
+                });
               },
             ),
           ],
