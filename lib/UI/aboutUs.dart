@@ -8,13 +8,29 @@ class AboutUs extends StatefulWidget {
 }
 
 class _AboutUsState extends State<AboutUs> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("About Us"),
+        title: const Text("About us"),
         centerTitle: true,
         backgroundColor: Colors.black54,
+      ),
+      backgroundColor: Colors.grey.shade100,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset("../assets/images/logo.png",
+              height: 400,),
+            Text("Okayyy Let's go",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),),
+            Text("© Gurvan Buanic & Florian Chicot - 2023",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),)
+          ],
+        ),
       ),
     );
   }
