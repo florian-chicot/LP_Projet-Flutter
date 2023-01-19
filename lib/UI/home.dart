@@ -20,25 +20,38 @@ class _AppState extends State<App> {
       ),
       backgroundColor: Colors.grey.shade100,
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                      labelText: 'Search Countries',
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  child: const Text('Search'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Search()),
+                    );
+                  },
+                ),
+              ],
+            ),
             ElevatedButton(
               child: const Text('About Us'),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const AboutUs()),
-                );
-              },
-            ),
-            ElevatedButton(
-              child: const Text('Search'),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Search()),
                 );
               },
             ),
