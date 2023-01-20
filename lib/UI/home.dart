@@ -123,6 +123,9 @@ class _AppState extends State<App> {
                   width: 300,
                   child: TypeAheadField(
                     textFieldConfiguration: TextFieldConfiguration(
+                      onChanged: (value) {
+                        _searchValueCountry = value;
+                      },
                       controller: _typeAheadController,
                       decoration: InputDecoration(
                         labelText: 'Country',
@@ -139,23 +142,23 @@ class _AppState extends State<App> {
                     },
                     onSuggestionSelected: (suggestion) {
                       _typeAheadController.text = suggestion;
-                    },
+                      _searchValueCountry = suggestion;},
                   ),
                 ),
                 ElevatedButton(
-                    child: const Text('Search'),
-                    onPressed: () {
-                      Future<List<Country>> future = fetchCountries(_searchValueCountry);
-                      future.then((data) {
-                        Country country = data[0];
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => CountryDetail(country)),
-                        ).then((value) {
-                          _controller.clear();
-                        });
+                  child: const Text('Search'),
+                  onPressed: () {
+                    Future<List<Country>> future = fetchCountries(_searchValueCountry);
+                    future.then((data) {
+                      Country country = data[0];
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CountryDetail(country)),
+                      ).then((value) {
+                        _controller.clear();
                       });
-                    }
+                    });
+                  }
                 ),
               ],
             ),
