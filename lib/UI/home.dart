@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter/UI/CountryDetail.dart';
 import 'package:projet_flutter/UI/aboutUs.dart';
 import 'package:projet_flutter/UI/region.dart';
 import 'package:projet_flutter/UI/search.dart';
+
+import '../Model/country.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+Future<List<Country>> fetchCountries(String searchValueCountry) async {
+  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/${Uri.encodeFull(searchValueCountry)}'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response, then parse the JSON.
+    List<dynamic> countriesJson = json.decode(response.body);
+    List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
+    return countries;
+  }else {
+    throw Exception('Failed to load countries. Error code: ${response.statusCode}');
+  }
+}
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -90,11 +108,15 @@ class _AppState extends State<App> {
                 ElevatedButton(
                   child: const Text('Search'),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Search(_searchValueCountry)),
-                    ).then((value) {
-                      _controller.clear();
+                    Future<List<Country>> future = fetchCountries(_searchValueCountry);
+                    future.then((data) {
+                      Country country = data[0];
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CountryDetail(country)),
+                      ).then((value) {
+                        _controller.clear();
+                      });
                     });
                   }
                 ),
