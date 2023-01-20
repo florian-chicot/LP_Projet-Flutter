@@ -125,7 +125,7 @@ class _AppState extends State<App> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text("Select the continent you want to see all their countries : ",
+                const Text("Select countries from ",
                   style: TextStyle(
                       fontSize: 16
                   ),
