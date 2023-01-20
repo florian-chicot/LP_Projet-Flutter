@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projet_flutter/UI/aboutUs.dart';
+import 'package:projet_flutter/UI/region.dart';
 import 'package:projet_flutter/UI/search.dart';
 
 class App extends StatefulWidget {
@@ -12,6 +13,20 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   final TextEditingController _controller = TextEditingController();
   String _searchValueCountry = '';
+
+  // Initial Selected Value
+  String _searchValueRegion = '...';
+
+  // List of items in our dropdown menu
+  var items = [
+    '...',
+    'Antarctic',
+    'Africa',
+    'Americas',
+    'Europe',
+    'Asia',
+    'Oceania'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +97,46 @@ class _AppState extends State<App> {
                       _controller.clear();
                     });
                   }
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text("Select the continent you want to see all their countries : ",
+                  style: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+                DropdownButton(
+                  // Initial Value
+                  value: _searchValueRegion,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _searchValueRegion = newValue!;
+                    });
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('Search'),
+                  onPressed: () async {
+                    final result =  await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Region(_searchValueRegion)),
+                    ).then((value) {
+                      _controller.clear();
+                    });
+                  },
                 ),
               ],
             )

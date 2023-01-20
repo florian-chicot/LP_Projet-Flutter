@@ -7,8 +7,10 @@ import '../Model/country.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_svg/flutter_svg.dart';
 
-Future<List<Country>> fetchCountries(String searchValueCountry) async {
-  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/${Uri.encodeFull(searchValueCountry)}'));
+import 'countryDetail.dart';
+
+Future<List<Country>> fetchCountries(String searchValueRegion) async {
+  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/region/${Uri.encodeFull(searchValueRegion)}'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response, then parse the JSON.
@@ -20,23 +22,22 @@ Future<List<Country>> fetchCountries(String searchValueCountry) async {
   }
 }
 
-class Search extends StatefulWidget {
-  final String searchValueCountry;
-  Search(this.searchValueCountry);
+class Region extends StatefulWidget {
+  final String searchValueRegion;
+  Region(this.searchValueRegion);
 
   @override
-  State<Search> createState() => _SearchState();
+  State<Region> createState() => _RegionState();
 }
 
-class _SearchState extends State<Search> {
+class _RegionState extends State<Region> {
   late Future<List<Country>> _countries;
 
   @override
   void initState() {
     super.initState();
-    _countries = fetchCountries(widget.searchValueCountry);
+    _countries = fetchCountries(widget.searchValueRegion);
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,21 +46,31 @@ class _SearchState extends State<Search> {
       ),
       body: FutureBuilder<List<Country>>(
         future: _countries,
-        builder: (context, countries) {
-          if (countries.hasData) {
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: countries.data!.length,
+              itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                final country = countries.data![index];
+                final country = snapshot.data![index];
                 return ListTile(
                   title: Text(country.name),
-                  subtitle: Text(country.officialName),
-                  leading: SvgPicture.network(country.flag),
+                  subtitle: Text(country.region),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(country.flag),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CountryDetail(country),
+                      ),
+                    );
+                  },
                 );
               },
             );
-          } else if (countries.hasError) {
-            return Text("${countries.error}");
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
           }
           return Center(child: CircularProgressIndicator());
         },
