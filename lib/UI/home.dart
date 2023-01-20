@@ -9,19 +9,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
-Future<List<Country>> fetchCountries(String searchValueCountry) async {
-  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/${Uri.encodeFull(searchValueCountry)}'));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response, then parse the JSON.
-    List<dynamic> countriesJson = json.decode(response.body);
-    List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
-    return countries;
-  }else {
-    throw Exception('Failed to load countries. Error code: ${response.statusCode}');
-  }
-}
-
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -67,6 +54,19 @@ class _AppState extends State<App> {
     }
   }
 
+  Future<List<Country>> fetchCountries(String searchValueCountry) async {
+    final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/${Uri.encodeFull(searchValueCountry)}'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, then parse the JSON.
+      List<dynamic> countriesJson = json.decode(response.body);
+      List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
+      return countries;
+    }else {
+      throw Exception('Failed to load countries. Error code: ${response.statusCode}');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +77,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: const Text("Home"),
         centerTitle: true,
         backgroundColor: Colors.black54,
       ),
