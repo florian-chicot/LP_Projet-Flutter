@@ -1,12 +1,3 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-/**
-    TODO
-    Display List<String>
-    Change population type to int
- */
-
 class Country {
   final String name;
   final String frenchName;
@@ -14,7 +5,7 @@ class Country {
   final String flag;
   final String flagEmoji;
   //final List<String> capital;
-  //final List<String> continent;
+  final String region;
   //final List<String> languages;
   //final bool independent;
   //final List<String> currencies;
@@ -28,7 +19,7 @@ class Country {
     required this.flag,
     required this.flagEmoji,
     //required this.capital,
-    //required this.continent,
+    required this.region,
     //required this.languages,
     //required this.independent,
     //required this.currencies,
@@ -44,7 +35,7 @@ class Country {
       flag: json['flags']['svg'],
       flagEmoji: json['flag'],
       //capital: List<String>.from(json['capital'].map((currencies) => currencies['name'])),
-      //continent: json['region'],
+      region: json['region'],
       //languages: List<String>.from(json['languages'].map((language) => language['name'])),
       //independent: json['independent'],
       //currencies: List<String>.from(json['currencies'].map((currencies) => currencies['name'])),

@@ -22,13 +22,22 @@ class _AboutUsState extends State<AboutUs> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Image.asset("../assets/images/logo.png",
-              height: 400,),
-            Text("Okayyy Let's go",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),),
-            Text("© Gurvan Buanic & Florian Chicot - 2023",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),)
+              height: 400,
+            ),
+            const Text("Okayyy Let's go",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 50
+              ),
+            ),
+            const Text("© Gurvan Buanic & Florian Chicot - 2023",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16
+              ),
+            ),
           ],
         ),
       ),
