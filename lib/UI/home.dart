@@ -58,8 +58,8 @@ class _AppState extends State<App> {
       // If the server did return a 200 OK response, then parse the JSON.
       List<dynamic> countriesJson = json.decode(response.body);
       List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
-      List<String> _countryNames = countries.map((c) => c.name).toList();
-      return _countryNames;
+      List<String> countryNames = countries.map((c) => c.name).toList();
+      return countryNames;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -127,7 +127,7 @@ class _AppState extends State<App> {
                         _searchValueCountry = value;
                       },
                       controller: _typeAheadController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Country',
                       ),
                     ),
@@ -192,7 +192,7 @@ class _AppState extends State<App> {
                 ElevatedButton(
                   child: const Text('Search'),
                   onPressed: () async {
-                    final result =  await Navigator.push(
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Region(_searchValueRegion)),
                     ).then((value) {
