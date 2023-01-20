@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:projet_flutter/UI/CountryDetail.dart';
+import 'package:projet_flutter/UI/countryDetail.dart';
 import 'package:projet_flutter/UI/aboutUs.dart';
 import 'package:projet_flutter/UI/region.dart';
 
 import '../Model/country.dart';
-import 'package:http/http.dart' as http;
+
 import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 Future<List<Country>> fetchCountries(String searchValueCountry) async {
   final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/${Uri.encodeFull(searchValueCountry)}'));
@@ -20,12 +22,6 @@ Future<List<Country>> fetchCountries(String searchValueCountry) async {
   }
 }
 
-import '../Model/country.dart';
-
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter_typeahead/flutter_typeahead.dart';
-
 class App extends StatefulWidget {
   const App({super.key});
 
@@ -35,7 +31,22 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final TextEditingController _controller = TextEditingController();
-<<<<<<< HEAD
+  String _searchValueCountry = '';
+
+  // Initial Selected Value
+  String _searchValueRegion = '...';
+
+  // List of items in our dropdown menu
+  var items = [
+    '...',
+    'Antarctic',
+    'Africa',
+    'Americas',
+    'Europe',
+    'Asia',
+    'Oceania'
+  ];
+
   final TextEditingController _typeAheadController = TextEditingController();
   List<String> _countryNames = [];
   late Future<List<String>> getCountryNames;
@@ -61,23 +72,6 @@ class _AppState extends State<App> {
     super.initState();
     _getCountryNames();
   }
-=======
-  String _searchValueCountry = '';
-
-  // Initial Selected Value
-  String _searchValueRegion = '...';
-
-  // List of items in our dropdown menu
-  var items = [
-    '...',
-    'Antarctic',
-    'Africa',
-    'Americas',
-    'Europe',
-    'Asia',
-    'Oceania'
-  ];
->>>>>>> feature/gurvan
 
   @override
   Widget build(BuildContext context) {
@@ -108,9 +102,9 @@ class _AppState extends State<App> {
               ),
               const Text("© Gurvan Buanic & Florian Chicot - 2023",
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.white
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white
                 ),
               ),
             ],
@@ -127,23 +121,12 @@ class _AppState extends State<App> {
               children: <Widget>[
                 SizedBox(
                   width: 300,
-<<<<<<< HEAD
                   child: TypeAheadField(
                     textFieldConfiguration: TextFieldConfiguration(
                       controller: _typeAheadController,
                       decoration: InputDecoration(
                         labelText: 'Country',
                       ),
-=======
-                  child: TextFormField(
-                    onChanged: (value) {
-                      _searchValueCountry = value;
-                    },
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      border: UnderlineInputBorder(),
-                      labelText: 'Search Countries',
->>>>>>> feature/gurvan
                     ),
                     suggestionsCallback: (pattern) async {
                       _countryNames = await _getCountryNames();
@@ -160,19 +143,19 @@ class _AppState extends State<App> {
                   ),
                 ),
                 ElevatedButton(
-                  child: const Text('Search'),
-                  onPressed: () {
-                    Future<List<Country>> future = fetchCountries(_searchValueCountry);
-                    future.then((data) {
-                      Country country = data[0];
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => CountryDetail(country)),
-                      ).then((value) {
-                        _controller.clear();
+                    child: const Text('Search'),
+                    onPressed: () {
+                      Future<List<Country>> future = fetchCountries(_searchValueCountry);
+                      future.then((data) {
+                        Country country = data[0];
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CountryDetail(country)),
+                        ).then((value) {
+                          _controller.clear();
+                        });
                       });
-                    });
-                  }
+                    }
                 ),
               ],
             ),
