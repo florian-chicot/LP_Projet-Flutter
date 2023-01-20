@@ -7,23 +7,14 @@ import '../Model/country.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_svg/flutter_svg.dart';
 
-Future<List<Country>> fetchCountries(String searchValueCountry, String searchValueRegion) async {
-  String region = searchValueRegion;
-  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/region/$region'));
+Future<List<Country>> fetchCountries(String searchValueCountry) async {
   String pays = searchValueCountry;
-  final response2 = await http.get(Uri.parse('https://restcountries.com/v3.1/name/$pays'));
+  final response = await http.get(Uri.parse('https://restcountries.com/v3.1/name/$pays'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response, then parse the JSON.
-    List<dynamic> countriesByRegionJson = json.decode(response.body);
-    List<Country> countries = countriesByRegionJson.map((c) => Country.fromJson(c)).toList();
-    region = '';
-    return countries;
-  } else if (response2.statusCode == 200) {
-    // If the server did return a 200 OK response, then parse the JSON.
-    List<dynamic> countriesJson = json.decode(response2.body);
+    List<dynamic> countriesJson = json.decode(response.body);
     List<Country> countries = countriesJson.map((c) => Country.fromJson(c)).toList();
-    pays = '';
     return countries;
   }else{
     // If the server did not return a 200 OK response,
@@ -34,8 +25,7 @@ Future<List<Country>> fetchCountries(String searchValueCountry, String searchVal
 
 class Search extends StatefulWidget {
   final String searchValueCountry;
-  final String searchValueRegion;
-  const Search({Key? key, required this.searchValueCountry, required this.searchValueRegion}) : super(key: key);
+  Search(this.searchValueCountry);
 
   @override
   State<Search> createState() => _SearchState();
@@ -47,7 +37,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    futureCountries= fetchCountries(widget.searchValueCountry, widget.searchValueRegion);
+    futureCountries= fetchCountries(widget.searchValueCountry);
   }
 
   @override

@@ -1,12 +1,3 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-/**
-    TODO
-    Display List<String>
-    Change population type to int
- */
-
 class Country {
   final String name;
   final String frenchName;
