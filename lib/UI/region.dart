@@ -42,7 +42,7 @@ class _RegionState extends State<Region> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search Results'),
+        title: Text('Countries from '+widget.searchValueRegion),
       ),
       body: FutureBuilder<List<Country>>(
         future: _countries,
