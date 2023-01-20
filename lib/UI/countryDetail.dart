@@ -61,7 +61,14 @@ class _CountryDetailState extends State<CountryDetail> {
                     child: Text("Population",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                   ),
-                  Text("${country.population.toString()} inhabitants",
+                  Text(country.population.toString()+" inhabitants",
+                      style: const TextStyle(fontSize: 16)),
+                  Padding(
+                    padding: EdgeInsets.only(top:16), //apply padding horizontal or vertical only
+                    child: Text(country.capital.length == 1 ? "Capital city" : "Capital cities",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  ),
+                  Text(country.capital.join(', '),
                       style: const TextStyle(fontSize: 16)),
                 ],
               ),
