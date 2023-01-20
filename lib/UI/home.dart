@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:projet_flutter/UI/CountryDetail.dart';
 import 'package:projet_flutter/UI/aboutUs.dart';
 import 'package:projet_flutter/UI/region.dart';
-import 'package:projet_flutter/UI/search.dart';
 
 import '../Model/country.dart';
 import 'package:http/http.dart' as http;
