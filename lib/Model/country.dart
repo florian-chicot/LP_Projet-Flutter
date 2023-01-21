@@ -6,11 +6,11 @@ class Country {
   final String flagEmoji;
   final List<String> capital;
   final String region;
-  //final List<String> languages;
+  final List<String> languages;
   //final bool independent;
-  //final List<String> currencies;
+  final List<String> currencies;
   final int population;
-  //final List<String> topLevelDomains;
+  final List<String> topLevelDomains;
 
   const Country({
     required this.name,
@@ -20,11 +20,11 @@ class Country {
     required this.flagEmoji,
     required this.capital,
     required this.region,
-    //required this.languages,
+    required this.languages,
     //required this.independent,
-    //required this.currencies,
+    required this.currencies,
     required this.population,
-    //required this.topLevelDomains
+    required this.topLevelDomains
   });
 
   factory Country.fromJson(Map<String, dynamic> json) {
@@ -36,11 +36,11 @@ class Country {
       flagEmoji: json['flag'],
       capital: List<String>.from(json['capital']?.map((capital) => capital) ?? ["No capital city"]),
       region: json['region'],
-      //languages: List<String>.from(json['languages'].map((language) => language['name'])),
+      languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
       //independent: json['independent'],
-      //currencies: List<String>.from(json['currencies'].map((currencies) => currencies['name'])),
+      currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => currency['name'])) : ["No currency"],
       population: json['population'],
-      //topLevelDomains: json['tld'],
+      topLevelDomains: List<String>.from(json['tld']?.map((tld) => tld) ?? ["No top-level domain"]),
     );
   }
 }
