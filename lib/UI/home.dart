@@ -21,11 +21,11 @@ class _AppState extends State<App> {
   String _searchValueCountry = '';
 
   // Initial Selected Value
-  String _searchValueRegion = '...';
+  String _searchValueRegion = '  ...  ';
 
   // List of items in our dropdown menu
   var items = [
-    '...',
+    '  ...  ',
     'Antarctic',
     'Africa',
     'Americas',
@@ -165,7 +165,7 @@ class _AppState extends State<App> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const Text("Select countries from ",
+                const Text("Select countries from : ",
                   style: TextStyle(
                       fontSize: 16
                   ),
