@@ -36,7 +36,7 @@ class Country {
       languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
       currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => utf8.decode(currency['name'].codeUnits))) : ["No currency"],
       population: json['population'],
-      topLevelDomains: List<String>.from(json['tld']?.map((tld) => tld) ?? ["No top-level domain"]),
+      topLevelDomains: List<String>.from(json['tld']?.map((tld) => utf8.decode(tld.codeUnits)) ?? ["No top-level domain"]),
     );
   }
 }
