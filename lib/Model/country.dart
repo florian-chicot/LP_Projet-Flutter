@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Country {
   final String name;
   final String frenchName;
@@ -25,14 +27,14 @@ class Country {
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
-      name: json['name']['common'],
-      frenchName: json['translations']['fra']['common'],
-      officialName: json['name']['official'],
+      name: utf8.decode(json['name']['common'].codeUnits),
+      frenchName: utf8.decode(json['translations']['fra']['common'].codeUnits),
+      officialName: utf8.decode(json['name']['official'].codeUnits),
       flag: json['flags']['png'],
-      capital: List<String>.from(json['capital']?.map((capital) => capital) ?? ["No capital city"]),
+      capital: List<String>.from(json['capital']?.map((capital) => utf8.decode(capital.codeUnits)) ?? ["No capital city"]),
       region: json['region'],
       languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
-      currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => currency['name'])) : ["No currency"],
+      currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => utf8.decode(currency['name'].codeUnits))) : ["No currency"],
       population: json['population'],
       topLevelDomains: List<String>.from(json['tld']?.map((tld) => tld) ?? ["No top-level domain"]),
     );
