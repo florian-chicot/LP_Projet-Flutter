@@ -4,7 +4,7 @@ class Country {
   final String officialName;
   final String flag;
   final String flagEmoji;
-  //final List<String> capital;
+  final List<String> capital;
   final String region;
   //final List<String> languages;
   //final bool independent;
@@ -18,7 +18,7 @@ class Country {
     required this.officialName,
     required this.flag,
     required this.flagEmoji,
-    //required this.capital,
+    required this.capital,
     required this.region,
     //required this.languages,
     //required this.independent,
@@ -34,7 +34,7 @@ class Country {
       officialName: json['name']['official'],
       flag: json['flags']['svg'],
       flagEmoji: json['flag'],
-      //capital: List<String>.from(json['capital'].map((currencies) => currencies['name'])),
+      capital: List<String>.from(json['capital']?.map((capital) => capital) ?? ["No capital city"]),
       region: json['region'],
       //languages: List<String>.from(json['languages'].map((language) => language['name'])),
       //independent: json['independent'],
