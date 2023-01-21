@@ -3,7 +3,6 @@ class Country {
   final String frenchName;
   final String officialName;
   final String flag;
-  final String flagEmoji;
   final List<String> capital;
   final String region;
   final List<String> languages;
@@ -16,7 +15,6 @@ class Country {
     required this.frenchName,
     required this.officialName,
     required this.flag,
-    required this.flagEmoji,
     required this.capital,
     required this.region,
     required this.languages,
@@ -31,7 +29,6 @@ class Country {
       frenchName: json['translations']['fra']['common'],
       officialName: json['name']['official'],
       flag: json['flags']['png'],
-      flagEmoji: json['flag'],
       capital: List<String>.from(json['capital']?.map((capital) => capital) ?? ["No capital city"]),
       region: json['region'],
       languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
