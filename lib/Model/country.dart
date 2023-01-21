@@ -7,7 +7,6 @@ class Country {
   final List<String> capital;
   final String region;
   final List<String> languages;
-  //final bool independent;
   final List<String> currencies;
   final int population;
   final List<String> topLevelDomains;
@@ -21,7 +20,6 @@ class Country {
     required this.capital,
     required this.region,
     required this.languages,
-    //required this.independent,
     required this.currencies,
     required this.population,
     required this.topLevelDomains
@@ -32,12 +30,11 @@ class Country {
       name: json['name']['common'],
       frenchName: json['translations']['fra']['common'],
       officialName: json['name']['official'],
-      flag: json['flags']['svg'],
+      flag: json['flags']['png'],
       flagEmoji: json['flag'],
       capital: List<String>.from(json['capital']?.map((capital) => capital) ?? ["No capital city"]),
       region: json['region'],
       languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
-      //independent: json['independent'],
       currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => currency['name'])) : ["No currency"],
       population: json['population'],
       topLevelDomains: List<String>.from(json['tld']?.map((tld) => tld) ?? ["No top-level domain"]),

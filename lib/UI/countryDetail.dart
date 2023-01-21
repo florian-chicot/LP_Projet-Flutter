@@ -80,7 +80,7 @@ class _CountryDetailState extends State<CountryDetail> {
           padding: const EdgeInsets.all(2),
           child: Column(
             children: <Widget>[
-              SvgPicture.network(
+              Image.network(
                 country.flag,
                 width: 500,
               ),
