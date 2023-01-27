@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home.dart';
+
 class AboutUs extends StatefulWidget {
   const AboutUs({super.key});
 
@@ -18,17 +20,48 @@ class _AboutUsState extends State<AboutUs> {
         backgroundColor: Colors.black54,
       ),
       backgroundColor: Colors.grey.shade100,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        color: Colors.black54,
+        child: SizedBox(
+          height: 50.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                child: const Text('Home'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const App()),
+                  );
+                },
+              ),
+              const Text("© Gurvan Buanic & Florian Chicot - 2023",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Image.asset("../assets/images/logo.png",
-              height: 400,),
-            Text("Okayyy Let's go",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50),),
-            Text("© Gurvan Buanic & Florian Chicot - 2023",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),)
+              height: 400,
+            ),
+            const Text("Okayyy Let's go",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 50
+              ),
+            ),
           ],
         ),
       ),

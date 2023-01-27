@@ -1,55 +1,42 @@
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-/**
-    TODO
-    Display List<String>
-    Change population type to int
- */
 
 class Country {
   final String name;
   final String frenchName;
   final String officialName;
   final String flag;
-  final String flagEmoji;
-  //final List<String> capital;
-  //final List<String> continent;
-  //final List<String> languages;
-  //final bool independent;
-  //final List<String> currencies;
+  final List<String> capital;
+  final String region;
+  final List<String> languages;
+  final List<String> currencies;
   final int population;
-  //final List<String> topLevelDomains;
+  final List<String> topLevelDomains;
 
   const Country({
     required this.name,
     required this.frenchName,
     required this.officialName,
     required this.flag,
-    required this.flagEmoji,
-    //required this.capital,
-    //required this.continent,
-    //required this.languages,
-    //required this.independent,
-    //required this.currencies,
+    required this.capital,
+    required this.region,
+    required this.languages,
+    required this.currencies,
     required this.population,
-    //required this.topLevelDomains
+    required this.topLevelDomains
   });
 
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
-      name: json['name']['common'],
-      frenchName: json['translations']['fra']['common'],
-      officialName: json['name']['official'],
-      flag: json['flags']['svg'],
-      flagEmoji: json['flag'],
-      //capital: List<String>.from(json['capital'].map((currencies) => currencies['name'])),
-      //continent: json['region'],
-      //languages: List<String>.from(json['languages'].map((language) => language['name'])),
-      //independent: json['independent'],
-      //currencies: List<String>.from(json['currencies'].map((currencies) => currencies['name'])),
+      name: utf8.decode(json['name']['common'].codeUnits),
+      frenchName: utf8.decode(json['translations']['fra']['common'].codeUnits),
+      officialName: utf8.decode(json['name']['official'].codeUnits),
+      flag: json['flags']['png'],
+      capital: List<String>.from(json['capital']?.map((capital) => utf8.decode(capital.codeUnits)) ?? ["No capital city"]),
+      region: json['region'],
+      languages: json['languages'] != null ? List<String>.from(json['languages'].values.toList()) : ["No official language"],
+      currencies: json['currencies'] != null ? List<String>.from(json['currencies'].values.map((currency) => utf8.decode(currency['name'].codeUnits))) : ["No currency"],
       population: json['population'],
-      //topLevelDomains: json['tld'],
+      topLevelDomains: List<String>.from(json['tld']?.map((tld) => utf8.decode(tld.codeUnits)) ?? ["No top-level domain"]),
     );
   }
 }
